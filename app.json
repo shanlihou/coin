@@ -1,0 +1,14 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/calc/calc",
+    "pages/draw/draw"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#BBDEF8",
+    "navigationBarTitleText": "coin",
+    "navigationBarTextStyle": "white"
+  }
+}

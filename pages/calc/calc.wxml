@@ -1,0 +1,70 @@
+<!--pages/calc/calc.wxml-->
+<picker class="pick" bindchange="coinChange" value="{{coinIndex}}" range="{{coinArray}}">
+  <view class="pick-block">
+      <view class="pick-view">{{coinArray[coinIndex]}}</view>
+      <image class="pick-img" src="down.png" style='width:7px;height:5px'></image>
+  </view>
+</picker>
+
+<picker class="pick" style="margin-top:20px" bindchange="buyerChange" value="{{buyerIndex}}" range="{{buyerArray}}">
+  <view class="pick-block">
+      <view class="pick-view">{{buyerArray[buyerIndex]}}</view>
+      <image class="pick-img" src="down.png" style='width:7px;height:5px'></image>
+  </view>
+</picker>
+<template name="msgItem">
+  <view class="vert-view">
+    <text> {{top}} </text>
+    <view class="vert-line"></view>
+    <text> {{bottom}} </text>
+  </view>
+</template>
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+  <swiper-item>
+    <view class="hori-view" style='width:100%'>
+      <view style="width:15%"></view>
+      <template is="msgItem" style="width:20%" data="{{...test}}"/>
+      <view style="width:30%"></view>
+      <template is="msgItem" style="width:20%" data="{{...test}}"/>
+      <view style="width:15%"></view>
+    </view>
+    <view class="hori-view" style='width:100%'>
+      <view style="width:15%"></view>
+      <template is="msgItem" style="width:20%" data="{{...test}}"/>
+      <view style="width:30%"></view>
+      <template is="msgItem" style="width:20%" data="{{...test}}"/>
+      <view style="width:15%"></view>
+    </view>
+    
+  </swiper-item>
+  <block wx:for="{{types}}">
+    <swiper-item>
+      <icon type="{{item}}" size="100"/>
+    </swiper-item>
+  </block>
+</swiper>
+
+<view class="hori-view">
+  <view >总数量:</view>
+  <input type="digit"></input>
+</view>
+<view class="hori-view">
+  <view >平均买入价:</view>
+  <input type="digit"></input>
+</view>
+<view class="hori-view">
+  <switch checked bindchange="ioChange"/>
+  <view>
+    累计收益:{{profit}}
+  </view>
+</view>
+<view class="hori-view">
+  <view>{{ioRateStr[ioSwitch]}}:</view>
+  <input type="digit" style="width:50px" bindinput="calc"></input>
+  <view>{{ioAmountStr[ioSwitch]}}:</view>
+  <input type="digit" style="width:50px" bindinput="calc"></input>
+</view>
+<view class="hori-view">
+  <view>{{ioCostStr[ioSwitch]}}:{{ioCost}}</view>
+  <button>{{ioStr[ioSwitch]}}</button>
+</view>
