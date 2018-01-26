@@ -29,6 +29,18 @@ page {
   width:100px;
   height: 2px;
 }
+.tab-bar{
+  display: flex;
+  flex-flow:row;
+  margin-top:20px;
+  border-width:1px;
+  border-style:solid;
+  border-color: #A19894;
+}
+.tab-view{
+  flex:1;
+  text-align: center;
+}
 .pick-block {
   border-width:1px;
   width:100%;

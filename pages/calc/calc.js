@@ -17,6 +17,7 @@ Page({
     ioCostStr:['买入耗资(加上手续费)', '卖出收益(扣掉手续费)'],
     ioStr:['买', '卖'],
     ioCost:0,
+    overview:'概览',
 
     indicatorDots:false,
     autoplay:false,

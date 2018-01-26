@@ -12,14 +12,19 @@
       <image class="pick-img" src="down.png" style='width:7px;height:5px'></image>
   </view>
 </picker>
+<view class='tab-bar' style='width:100%'>
+  <view class='tab-view'>{{overview}}</view>
+  <view class='tab-view'>{{ioStr[0]}}</view>
+  <view class='tab-view'>{{ioStr[1]}}</view>
+</view>
 <template name="msgItem">
   <view class="vert-view">
-    <text> {{top}} </text>
+    <text style="text-align:center"> {{top}} </text>
     <view class="vert-line"></view>
-    <text> {{bottom}} </text>
+    <text style="text-align:center"> {{bottom}} </text>
   </view>
 </template>
-<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+<swiper current="{{current}}" duration="{{duration}}">
   <swiper-item>
     <view class="hori-view" style='width:100%'>
       <view style="width:15%"></view>
