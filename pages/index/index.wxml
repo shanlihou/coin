@@ -12,8 +12,5 @@
   </view>
   <view class="btn-area">  
    <navigator url="/pages/calc/calc" hover-class="navigator-hover">跳转calc页面</navigator>  
- </view>  
-  <view class="btn-area">  
-   <navigator url="/pages/draw/draw" hover-class="navigator-hover">跳转draw页面</navigator>  
- </view>  
+ </view>
 </view>

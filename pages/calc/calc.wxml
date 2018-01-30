@@ -1,8 +1,8 @@
 <!--pages/calc/calc.wxml-->
-<picker class="pick" bindchange="coinChange" value="{{coinIndex}}" range="{{coinArray}}">
+<picker class="pick" style="margin-top:20rpx" bindchange="coinChange" value="{{coinIndex}}" range="{{coinArray}}">
   <view class="pick-block">
       <view class="pick-view">{{coinArray[coinIndex]}}</view>
-      <image class="pick-img" src="down.png" style='width:7px;height:5px'></image>
+      <image class="pick-img" src="down.png" style='width:7rpx;height:5rpx'></image>
   </view>
 </picker>
 
@@ -28,16 +28,16 @@
   <swiper-item>
     <view class="hori-view" style='width:100%'>
       <view style="width:15%"></view>
-      <template is="msgItem" style="width:20%" data="{{...test}}"/>
+      <template is="msgItem" style="width:20%" data="{{...test[0]}}"/>
       <view style="width:30%"></view>
-      <template is="msgItem" style="width:20%" data="{{...test}}"/>
+      <template is="msgItem" style="width:20%" data="{{...test[1]}}"/>
       <view style="width:15%"></view>
     </view>
     <view class="hori-view" style='width:100%'>
       <view style="width:15%"></view>
-      <template is="msgItem" style="width:20%" data="{{...test}}"/>
+      <template is="msgItem" style="width:20%" data="{{...test[2]}}"/>
       <view style="width:30%"></view>
-      <template is="msgItem" style="width:20%" data="{{...test}}"/>
+      <template is="msgItem" style="width:20%" data="{{...test[3]}}"/>
       <view style="width:15%"></view>
     </view>
     

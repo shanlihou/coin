@@ -24,10 +24,21 @@ Page({
     interval:5000,
     duration:1000,
     types:['success', 'info', 'warn'],
-    test:{
+    test:[{
       "top":"持有数量",
       "bottom":"100块"
+    },{
+      "top": "平均买入价格",
+      "bottom": "10.123"
+    },{
+        "top": "收益",
+        "bottom": "123"
+    },
+    {
+      "top": "成本",
+      "bottom": "3212"
     }
+    ]
   },
 
   /**
