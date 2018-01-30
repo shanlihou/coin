@@ -16,4 +16,7 @@
   <view class="btn-area">  
    <navigator url="/pages/draw/draw" hover-class="navigator-hover">跳转draw页面</navigator>  
  </view>  
+  <view class="btn-area">  
+   <navigator url="/pages/cube/cube" hover-class="navigator-hover">跳转cube页面</navigator>  
+ </view>  
 </view>

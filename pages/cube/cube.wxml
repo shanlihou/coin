@@ -1,0 +1,7 @@
+<!--pages/cube/cube.wxml-->
+<view class="mainCtx">
+  <canvas canvas-id="myCanvas" style="border: 1px solid;width:{{ctxWidth}}px;height:{{ctxHeight}}px"
+    bindtouchstart="start"
+    bindtouchmove="move"
+    bindtouchend="end"/>
+</view>

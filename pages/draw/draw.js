@@ -87,6 +87,7 @@ Page({
   end: function (e) {
     //const ctx = this.data.ctx;
     //ctx.lineTo(e.touches[0].x, e.touches[0].y)
+    console.log(e)
     if (this.data.bDraw && this.data.leftLength > 0){
       this.draw(e.touches[0].x, e.touches[0].y)
     }

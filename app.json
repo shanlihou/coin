@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/calc/calc",
-    "pages/draw/draw"
+    "pages/draw/draw",
+    "pages/cube/cube"
   ],
   "window": {
     "backgroundTextStyle": "light",

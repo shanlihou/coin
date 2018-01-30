@@ -1,0 +1,5 @@
+/* pages/cube/cube.wxss */
+.mainCtx{
+  display: flex;
+  justify-content: center
+}
