@@ -1,7 +1,0 @@
-<!--pages/draw/draw.wxml-->
-<canvas canvas-id="myCanvas" style="border: 1px solid;"
-  bindtouchstart="start"
-  bindtouchmove="move"
-  bindtouchend="end"/>
-<button type="default" size="default"
-        disabled="{{false}}" bindtap="reDraw"> 重画 </button>
