@@ -15,28 +15,38 @@ Page({
     ioRateStr:['买入汇率', '卖出汇率'],
     ioAmountStr:['买入数量', '卖出数量'],
     ioCostStr:['买入耗资(加上手续费)', '卖出收益(扣掉手续费)'],
-    ioStr:['买', '卖'],
+    ioStr:['买卖', '卖'],
     ioCost:0,
     overview:'概览',
 
+    tabViewChosen:'skyblue',
     indicatorDots:false,
     autoplay:false,
     interval:5000,
-    duration:1000,
+    duration:500,
     types:['success', 'info', 'warn'],
     test:[{
       "top":"持有数量",
-      "bottom":"100块"
+      "bottom":"100",
+      "units": "块"
     },{
       "top": "平均买入价格",
-      "bottom": "10.123"
+      "bottom": "10.123",
+      "units":"btc/usdt"
     },{
         "top": "收益",
-        "bottom": "123"
+        "bottom": "123",
+        "units":"usdt"
     },
     {
       "top": "成本",
-      "bottom": "3212"
+      "bottom": "3212",
+      "units":"usdt"
+    }
+    ],
+
+    legend:[{
+      "input_title":"数量",
     }
     ]
   },
