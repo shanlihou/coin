@@ -1,75 +1,84 @@
+<import src="view_template.wxml" />
+
 <!--pages/calc/calc.wxml-->
-<picker class="pick" bindchange="coinChange" value="{{coinIndex}}" range="{{coinArray}}">
-  <view class="pick-block">
-      <view class="pick-view">{{coinArray[coinIndex]}}</view>
-      <image class="pick-img" src="down.png" style='width:7px;height:5px'></image>
-  </view>
+<picker class="pick" style="margin-top:20rpx;" bindchange="coinChange" value="{{coinIndex}}" range="{{coinArray}}">
+    <view class="pick-view">{{coinArray[coinIndex]}}</view>
+    <image class="pick-img" src="down.png" style='width:15rpx;height:10rpx'></image>
 </picker>
 
-<picker class="pick" style="margin-top:20px" bindchange="buyerChange" value="{{buyerIndex}}" range="{{buyerArray}}">
+<picker class="pick" style="margin-top:30rpx" bindchange="buyerChange" value="{{buyerIndex}}" range="{{buyerArray}}">
   <view class="pick-block">
       <view class="pick-view">{{buyerArray[buyerIndex]}}</view>
       <image class="pick-img" src="down.png" style='width:7px;height:5px'></image>
   </view>
 </picker>
+
+
+<!-- Swiper Title -->
 <view class='tab-bar' style='width:100%'>
-  <view class='tab-view'>{{overview}}</view>
-  <view class='tab-view'>{{ioStr[0]}}</view>
-  <view class='tab-view'>{{ioStr[1]}}</view>
+  <button class='tab-view' style="background-color:{{tabViewChosen}}">{{overview}}</button>
+  <button class='tab-view'>{{ioStr[0]}}</button>
+ <!-- <view class='tab-view'>{{ioStr[1]}}</view> -->
 </view>
-<template name="msgItem">
-  <view class="vert-view">
-    <text style="text-align:center"> {{top}} </text>
-    <view class="vert-line"></view>
-    <text style="text-align:center"> {{bottom}} </text>
-  </view>
-</template>
-<swiper current="{{current}}" duration="{{duration}}">
+
+
+<!-- Swiper -->
+
+
+<swiper duration="{{duration}}" style='padding-top: 10px;height:300pt'>
   <swiper-item>
-    <view class="hori-view" style='width:100%'>
-      <view style="width:15%"></view>
-      <template is="msgItem" style="width:20%" data="{{...test}}"/>
-      <view style="width:30%"></view>
-      <template is="msgItem" style="width:20%" data="{{...test}}"/>
-      <view style="width:15%"></view>
-    </view>
-    <view class="hori-view" style='width:100%'>
-      <view style="width:15%"></view>
-      <template is="msgItem" style="width:20%" data="{{...test}}"/>
-      <view style="width:30%"></view>
-      <template is="msgItem" style="width:20%" data="{{...test}}"/>
-      <view style="width:15%"></view>
-    </view>
-    
+      <view class="hori-view" style='width:100% ; height: 100px'>
+        <view style="width:15%"></view>
+        <template is="msgItem" style="width:40%" data="{{...test[0]}}"/>
+        <view style="width:30%"></view>
+        <template is="msgItem" style="width:40%" data="{{...test[1]}}"/>
+        <view style="width:15%"></view>
+      </view>
+      <view class="hori-view" style='padding-top:20px;width:100%; height: 100px'>
+        <view style="width:15%"></view>
+        <template is="msgItem" style="width:40%" data="{{...test[2]}}"/>
+        <view style="width:30%"></view>
+        <template is="msgItem" style="width:40%" data="{{...test[3]}}"/>
+        <view style="width:15%"></view>
+      </view>
   </swiper-item>
-  <block wx:for="{{types}}">
-    <swiper-item>
-      <icon type="{{item}}" size="100"/>
-    </swiper-item>
-  </block>
+
+  <swiper-item>
+    <view style="padding-left: 15px">
+      <view class="hori-view">
+        <view >总数量:</view>
+        <input type="digit"></input>
+      </view>
+      <view class="hori-view">
+        <view >平均买入价:</view>
+        <input type="digit"></input>
+      </view>
+      <view class="hori-view">
+        <switch checked bindchange="ioChange"/>
+        <view>
+          累计收益:{{profit}}
+        </view>
+      </view>
+      <view class="hori-view">
+        <view>{{ioRateStr[ioSwitch]}}:</view>
+        <input type="digit" style="width:50px" bindinput="calc"></input>
+        <view>{{ioAmountStr[ioSwitch]}}:</view>
+        <input type="digit" style="width:50px" bindinput="calc"></input>
+      </view>
+      <view class="hori-view">
+        <view>{{ioCostStr[ioSwitch]}}:{{ioCost}}</view>
+        <button>{{ioStr[ioSwitch]}}</button>
+      </view>
+    </view>
+  </swiper-item>
+
+
+  <!-- buy swiper Item  -->
+  <!-- <swiper-item>
+    <view class="hori-view">
+      <template is="inputWithLegend"/>
+    </view>
+  </swiper-item>   -->
 </swiper>
 
-<view class="hori-view">
-  <view >总数量:</view>
-  <input type="digit"></input>
-</view>
-<view class="hori-view">
-  <view >平均买入价:</view>
-  <input type="digit"></input>
-</view>
-<view class="hori-view">
-  <switch checked bindchange="ioChange"/>
-  <view>
-    累计收益:{{profit}}
-  </view>
-</view>
-<view class="hori-view">
-  <view>{{ioRateStr[ioSwitch]}}:</view>
-  <input type="digit" style="width:50px" bindinput="calc"></input>
-  <view>{{ioAmountStr[ioSwitch]}}:</view>
-  <input type="digit" style="width:50px" bindinput="calc"></input>
-</view>
-<view class="hori-view">
-  <view>{{ioCostStr[ioSwitch]}}:{{ioCost}}</view>
-  <button>{{ioStr[ioSwitch]}}</button>
-</view>
+<button>调整手续费</button>
