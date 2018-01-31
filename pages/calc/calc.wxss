@@ -94,9 +94,9 @@ page {
 
 
 .input-title{
-  padding-left: 20pt;
+  padding-left: 5pt;
   font-size: 16pt;
-  color: #fff;
+  color: aliceblue;
 }
 
 .input-vert-line{
@@ -106,5 +106,15 @@ page {
 }
 
 .input-number{
-  font-size: 16pt;
+  padding-top: 10px;
+  width: 90%;
+  height: 30pt;
+  text-anchor: initial;
+  background-clip: content-box;
+  background-color: #342821;
+  border-bottom-style: solid;
+  border-bottom-color: aliceblue;
+  border-width: 1pt;
+  color:aliceblue;
+  font-size: 14pt;
 }

@@ -46,8 +46,17 @@ Page({
     ],
 
     legend:[{
-      "input_title":"数量",
-    }
+      "inputTitle":"汇率",
+      "padTop":5
+    },
+      {
+        "inputTitle": "数量",
+        "padTop": 15
+      },
+      {
+        "inputTitle": "费用（算上手续费）",
+        "padTop": 15
+      }
     ]
   },
 

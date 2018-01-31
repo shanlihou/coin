@@ -11,10 +11,10 @@
 </template>
 
 
- <template name="inputWithLegend">
-  <view style="display:flex; flex-flow: column;">
-    <text class="input-title">{{inputTitle}}</text>
+<template name="inputWithLegend">
+  <view style="display:flex; flex-flow: column; padding-left: 15px;">
+    <text class="input-title" style="padding-top:{{padTop}}px">{{inputTitle}}</text>
     <view class="input-vert-line" />
-    <input class="input-number" type="digit" focus="true"/>
+    <input class="input-number" type="digit"/>
   </view>
 </template> 

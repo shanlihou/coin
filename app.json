@@ -1,9 +1,11 @@
 {
   "pages": [
     "pages/calc/calc",
-    "pages/logs/logs",
     "pages/draw/draw",
-    "pages/cube/cube"
+    "pages/cube/cube",
+    "pages/logs/logs"
+ 
+
   ],
   "window": {
     "backgroundTextStyle": "light",
