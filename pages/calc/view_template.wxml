@@ -1,0 +1,20 @@
+<template name="msgItem">
+  <view class="vert-view">
+    <text style="text-align:left"> {{top}} </text>
+    <view class="vert-line"></view>
+    <view class="num-unit-view">
+      <text class="number-display" style="text-align:right"> {{bottom}} </text>
+      <view style='width:3%' />
+      <text class="units"> {{units}} </text>
+    </view>
+  </view>
+</template>
+
+
+ <template name="inputWithLegend">
+  <view style="display:flex; flex-flow: column;">
+    <text class="input-title">{{inputTitle}}</text>
+    <view class="input-vert-line" />
+    <input class="input-number" type="digit" focus="true"/>
+  </view>
+</template> 
