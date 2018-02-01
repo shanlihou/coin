@@ -41,6 +41,14 @@
         <template is="msgItem" style="width:40%" data="{{...test[3]}}"/>
         <view style="width:15%"></view>
       </view>
+      <view style="margin-top: 15pt; display: flex">
+        <text>修改</text><switch bindchange="changeServiceCharge" checked="{{serviceChargeLock}}" >锁定</switch>
+        <view style="width:5%"/>
+        <input disabled="{{serviceChargeLock}}" 
+              focus="{{serviceCharge? false : true}}"
+              placeholder="手续费： {{serviceCharge}}" style="align-self:right"
+        ></input>
+      </view>
   </swiper-item>
 
 
@@ -50,12 +58,17 @@
     <block wx:for="{{legend}}">
       <template is="inputWithLegend" data="{{...item}}" />
     </block>
+    <view style="margin-left:15px; display:flex; padding-top:26px" >
+      <text>买</text> 
+      <switch bindchange="dealActionChange">卖</switch> 
+      <button style="margin-right:50px">{{dealAction}}</button>
+    </view>
   </swiper-item>
 
 
 
-  <swiper-item>
-    <view style="padding-left: 15px">
+  <!-- <swiper-item>
+    <view style="margin-left: 15px">
       <view class="hori-view">
         <view >总数量:</view>
         <input type="digit"></input>
@@ -81,8 +94,6 @@
         <button>{{ioStr[ioSwitch]}}</button>
       </view>
     </view>
-  </swiper-item>
+  </swiper-item> -->
 
 </swiper>
-
-<button>调整手续费</button>

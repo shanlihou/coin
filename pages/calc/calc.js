@@ -5,6 +5,13 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 非显示数据
+    serviceChargeLock: true,
+
+    serviceCharge: 0.0005,
+
+    dealAction:"买入",
+
     coinArray:['btc', 'eth', 'bnb'],
     coinIndex:0,
     buyerArray:['usdt', 'rmb'],
@@ -18,6 +25,7 @@ Page({
     ioStr:['买卖', '卖'],
     ioCost:0,
     overview:'概览',
+
 
     tabViewChosen:'skyblue',
     indicatorDots:false,
@@ -133,5 +141,18 @@ Page({
   },
   calc:function(e){
     
-  }
+  },
+  // 买卖行为切换
+  dealActionChange:function(e) {
+    console.log(e.detail.value)
+    this.setData({
+      dealAction: e.detail.value ? "卖出": "买入"
+    })
+  },
+
+  changeServiceCharge:function(e) {
+    this.setData({
+      serviceChargeLock: e.detail.value
+    })
+  },
 })

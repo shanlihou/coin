@@ -95,7 +95,7 @@ page {
 
 .input-title{
   padding-left: 5pt;
-  font-size: 16pt;
+  font-size: 14pt;
   color: aliceblue;
 }
 
@@ -108,7 +108,7 @@ page {
 .input-number{
   padding-top: 10px;
   width: 90%;
-  height: 30pt;
+  height: 20pt;
   text-anchor: initial;
   background-clip: content-box;
   background-color: #342821;
@@ -116,5 +116,5 @@ page {
   border-bottom-color: aliceblue;
   border-width: 1pt;
   color:aliceblue;
-  font-size: 14pt;
+  font-size: 12pt;
 }
