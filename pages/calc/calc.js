@@ -17,14 +17,13 @@ Page({
     buyerArray:['usdt', 'rmb'],
     buyerIndex:0,
     amount:0,
-    profit:0,
-    ioSwitch:0,
-    ioRateStr:['买入汇率', '卖出汇率'],
-    ioAmountStr:['买入数量', '卖出数量'],
-    ioCostStr:['买入耗资(加上手续费)', '卖出收益(扣掉手续费)'],
-    ioStr:['买卖', '卖'],
-    ioCost:0,
+    rate:0,
+    cost:"",
+    buyOrSale:false,
+    business:'买卖',
     overview:'概览',
+    tabColor: ['skyblue', ''],
+    tabIndex:0,
 
 
     tabViewChosen:'skyblue',
@@ -33,39 +32,36 @@ Page({
     interval:5000,
     duration:500,
     types:['success', 'info', 'warn'],
-    test:[{
+    viewBlock:[{
       "top":"持有数量",
-      "bottom":"100",
+      "bottom":0,
       "units": "块"
     },{
       "top": "平均买入价格",
-      "bottom": "10.123",
+      "bottom": 0,
       "units":"btc/usdt"
     },{
         "top": "收益",
-        "bottom": "123",
+        "bottom": 0,
         "units":"usdt"
     },
     {
       "top": "成本",
-      "bottom": "3212",
+      "bottom": 0,
       "units":"usdt"
     }
     ],
 
     legend:[{
       "inputTitle":"汇率",
-      "padTop":5
+      "padTop":5,
+      "id":"rate"
     },
-      {
-        "inputTitle": "数量",
-        "padTop": 15
-      },
-      {
-        "inputTitle": "费用（算上手续费）",
-        "padTop": 15
-      }
-    ]
+    {
+      "inputTitle": "数量",
+      "padTop": 15,
+      "id":"amount"
+    }]
   },
 
   /**
@@ -109,6 +105,46 @@ Page({
   onPullDownRefresh: function () {
   
   },
+  calcCost:function(){
+    var cost = this.data.rate * this.data.amount;
+    if (cost != 0) {
+      cost += this.data.buyOrSale ? this.data.serviceCharge : -this.data.serviceCharge;
+    }
+    else {
+      cost = "";
+    }
+    this.setData({
+      cost:cost
+    })
+  },
+  onInputBusiness:function(e){
+    var id = e.target.id;
+    var value = parseFloat(e.detail.value);
+    var rate = this.data.rate;
+    var amount = this.data.amount;
+    if (id == 'rate'){
+      rate = value;
+    }else if (id == 'amount'){
+      amount = value;
+    }
+    this.setData({
+      rate: rate,
+      amount: amount
+    })
+    this.calcCost();
+  },
+  onTapOverview:function(e){
+    this.setTab(0);
+    this.setData({
+      tabIndex:0
+    })
+  },
+  onTapBusiness: function (e) {
+    this.setTab(1);
+    this.setData({
+      tabIndex: 1
+    })
+  },
 
   /**
    * 页面上拉触底事件的处理函数
@@ -116,12 +152,31 @@ Page({
   onReachBottom: function () {
   
   },
+  setTab:function(index){
+    var tabColor = new Array();
+    for (var i = 0; i < this.data.tabColor.length; i++)
+    {
+      if(i == index){
+        tabColor.push('skyblue')
+      }
+      else{
+        tabColor.push('')
+      }
+    }
+    this.setData({
+      tabColor:tabColor
+    });
+  },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
   
+  },
+  onChangeTab:function(e){
+    console.log(e.detail.current)
+    this.setTab(e.detail.current);
   },
   coinChange:function(e){
     this.setData({
@@ -146,8 +201,10 @@ Page({
   dealActionChange:function(e) {
     console.log(e.detail.value)
     this.setData({
-      dealAction: e.detail.value ? "卖出": "买入"
-    })
+      dealAction: e.detail.value ? "卖出": "买入",
+      buyOrSale: e.detail.value
+    });
+    this.calcCost();
   },
 
   changeServiceCharge:function(e) {
