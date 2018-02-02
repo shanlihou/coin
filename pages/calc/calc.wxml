@@ -16,8 +16,8 @@
 
 <!-- Swiper Title -->
 <view class='tab-bar' style='width:100%'>
-  <button class='tab-view' style="background-color:{{tabViewChosen}}">{{overview}}</button>
-  <button class='tab-view'>{{ioStr[0]}}</button>
+  <button class='tab-view' bindtap="onTapOverview" style="background-color:{{tabColor[0]}}">{{overview}}</button>
+  <button class='tab-view' bindtap="onTapBusiness" style="background-color:{{tabColor[1]}}"> {{business}}</button>
  <!-- <view class='tab-view'>{{ioStr[1]}}</view> -->
 </view>
 
@@ -25,20 +25,20 @@
 <!-- Swiper -->
 
 
-<swiper current="1" duration="{{duration}}" style='padding-top: 10px;height:300pt'>
+<swiper current="{{tabIndex}}" bindchange="onChangeTab" duration="{{duration}}" style='padding-top: 10px;height:300pt'>
   <swiper-item>
       <view class="hori-view" style='width:100% ; height: 100px'>
         <view style="width:15%"></view>
-        <template is="msgItem" style="width:40%" data="{{...test[0]}}"/>
+        <template is="msgItem" style="width:40%" data="{{...viewBlock[0]}}"/>
         <view style="width:30%"></view>
-        <template is="msgItem" style="width:40%" data="{{...test[1]}}"/>
+        <template is="msgItem" style="width:40%" data="{{...viewBlock[1]}}"/>
         <view style="width:15%"></view>
       </view>
       <view class="hori-view" style='padding-top:20px;width:100%; height: 100px'>
         <view style="width:15%"></view>
-        <template is="msgItem" style="width:40%" data="{{...test[2]}}"/>
+        <template is="msgItem" style="width:40%" data="{{...viewBlock[2]}}"/>
         <view style="width:30%"></view>
-        <template is="msgItem" style="width:40%" data="{{...test[3]}}"/>
+        <template is="msgItem" style="width:40%" data="{{...viewBlock[3]}}"/>
         <view style="width:15%"></view>
       </view>
       <view style="margin-top: 15pt; display: flex">
@@ -58,9 +58,16 @@
     <block wx:for="{{legend}}">
       <template is="inputWithLegend" data="{{...item}}" />
     </block>
+    <view  style="display:flex; flex-flow: column; padding-left: 15px;">
+      <text class="input-title" style="padding-top:15px">费用（算上手续费）</text>
+      <view class="input-vert-line" />
+      <input disabled="{{true}}" value="{{cost}}" class="input-number" type="digit"/>
+    </view>
+
     <view style="margin-left:15px; display:flex; padding-top:26px" >
       <text>买</text> 
-      <switch bindchange="dealActionChange">卖</switch> 
+      <switch checked="{{buyOrSale}}" bindchange="dealActionChange"></switch> 
+      <text>卖</text>
       <button style="margin-right:50px">{{dealAction}}</button>
     </view>
   </swiper-item>
