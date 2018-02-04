@@ -68,7 +68,7 @@
       <text>买</text> 
       <switch checked="{{buyOrSale}}" bindchange="dealActionChange"></switch> 
       <text>卖</text>
-      <button style="margin-right:50px">{{dealAction}}</button>
+      <button bindtap="onBuy" disabled="{{buyDisabled}}" style="margin-right:50px">{{dealAction}}</button>
     </view>
   </swiper-item>
 
