@@ -78,6 +78,7 @@ Page({
     // load the data of some blockChain
     var key = this.data.coinArray[this.data.coinIndex] + '_' + this.data.buyerArray[this.data.buyerIndex]
     var chainData = wx.getStorageSync(key);
+    console.log(chainData)
     this.setData(chainData);
     /*
     wx.getStorage({
