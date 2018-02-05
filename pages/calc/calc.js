@@ -16,10 +16,12 @@ Page({
     coinIndex:0,
     buyerArray:['usdt', 'rmb'],
     buyerIndex:0,
+    totalAmount:0,
     amount:0,
     rate:0,
     cost:"",
     buyOrSale:false,
+    buyDisabled:true,
     business:'买卖',
     overview:'概览',
     tabColor: ['skyblue', ''],
@@ -51,7 +53,6 @@ Page({
       "units":"usdt"
     }
     ],
-
     legend:[{
       "inputTitle":"汇率",
       "padTop":5,
@@ -68,14 +69,30 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    var that = this;
+    var common = wx.getStorageSync('common');
+    that.setData(common);
+    that.setData({
+      common: common
+    })
+    // load the data of some blockChain
+    var key = this.data.coinArray[this.data.coinIndex] + '_' + this.data.buyerArray[this.data.buyerIndex]
+    var chainData = wx.getStorageSync(key);
+    console.log(chainData)
+    this.setData(chainData);
+    /*
+    wx.getStorage({
+      key: key,
+      success: function (res) {
+        that.setData(res.data);
+      }
+    });*/
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
   },
 
   /**
@@ -107,15 +124,18 @@ Page({
   },
   calcCost:function(){
     var cost = this.data.rate * this.data.amount;
-    if (cost != 0) {
-      cost += this.data.buyOrSale ? this.data.serviceCharge : -this.data.serviceCharge;
+    var buyDisabled = true;
+    if (cost) {
+      cost += (this.data.buyOrSale ? -this.data.serviceCharge : this.data.serviceCharge) * cost;
+      buyDisabled = false;
     }
     else {
       cost = "";
     }
     this.setData({
-      cost:cost
-    })
+      cost: cost, 
+      buyDisabled: buyDisabled
+    });
   },
   onInputBusiness:function(e){
     var id = e.target.id;
@@ -175,21 +195,99 @@ Page({
   
   },
   onChangeTab:function(e){
-    console.log(e.detail.current)
     this.setTab(e.detail.current);
+  },
+  clearBus:function(){
+    this.setData({
+      rate: 0,
+      viewBlock: [{
+        "top": "持有数量",
+        "bottom": 0,
+        "units": "块"
+      }, {
+        "top": "平均买入价格",
+        "bottom": 0,
+        "units": "btc/usdt"
+      }, {
+        "top": "收益",
+        "bottom": 0,
+        "units": "usdt"
+      },
+      {
+        "top": "成本",
+        "bottom": 0,
+        "units": "usdt"
+      }
+      ],
+      legend: [{
+        "inputTitle": "汇率",
+        "padTop": 5,
+        "id": "rate",
+        "value":""
+      },
+      {
+        "inputTitle": "数量",
+        "padTop": 15,
+        "id": "amount",
+        value:""
+      }]
+    });
   },
   coinChange:function(e){
     this.setData({
       coinIndex:e.detail.value
+    });
+    var common = this.data.common;
+    common.coinIndex = e.detail.value;
+    wx.setStorage({
+      key: 'common',
+      data: common,
+    });
+    this.setData({
+      common:common
+    })
+
+    this.clearBus();
+    var key = this.data.coinArray[this.data.coinIndex] + '_' + this.data.buyerArray[this.data.buyerIndex]
+    var that = this;
+    wx.getStorage({
+      key: key,
+      success: function(res) {
+        that.setData(res.data);
+        that.setData({
+          busData: res.data
+        })
+      },
     })
   },
-  buyerChange:function(e){
+  buyerChange: function (e) {
     this.setData({
-      buyerIndex:e.detail.value
+      buyerIndex: e.detail.value
+    })
+    var common = this.data.common;
+    common.buyerIndex = e.detail.value;
+    wx.setStorage({
+      key: 'common',
+      data: common,
+    });
+    this.setData({
+      common: common
+    })
+
+    this.clearBus();
+    var key = this.data.coinArray[this.data.coinIndex] + '_' + this.data.buyerArray[this.data.buyerIndex]
+    var that = this;
+    wx.getStorage({
+      key: key,
+      success: function (res) {
+        that.setData(res.data);
+        that.setData({
+          busData: res.data
+        })
+      },
     })
   },
   ioChange:function(e){
-    console.log(e.detail.value)
     this.setData({
       ioSwitch: e.detail.value ? 0 : 1
     })
@@ -199,12 +297,41 @@ Page({
   },
   // 买卖行为切换
   dealActionChange:function(e) {
-    console.log(e.detail.value)
     this.setData({
       dealAction: e.detail.value ? "卖出": "买入",
       buyOrSale: e.detail.value
     });
     this.calcCost();
+  },
+  onBuy:function(e){
+    var viewBlock = this.data.viewBlock;
+    if (this.data.buyOrSale){
+      if (viewBlock[0].bottom < this.data.amount)
+        return;
+      viewBlock[0].bottom -= this.data.amount;
+      viewBlock[2].bottom += this.data.cost;
+
+    }
+    else{
+      viewBlock[0].bottom += this.data.amount;
+      viewBlock[2].bottom -= this.data.cost;
+      viewBlock[3].bottom += this.data.cost;
+    }
+    this.setData({
+      viewBlock:viewBlock
+    })
+    var key = this.data.coinArray[this.data.coinIndex] + '_' + this.data.buyerArray[this.data.buyerIndex];
+    var legend = this.data.legend;
+    legend[0].value = this.data.rate;
+    var value = {
+      viewBlock:viewBlock,
+      rate:this.data.rate,
+      legend:legend
+    }
+    wx.setStorage({
+      key: key,
+      data: value,
+    })
   },
 
   changeServiceCharge:function(e) {
