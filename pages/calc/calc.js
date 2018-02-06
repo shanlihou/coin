@@ -17,6 +17,9 @@ Page({
     buyerArray:['usdt', 'rmb'],
     buyerIndex:0,
     totalAmount:0,
+    totalCost:0,
+    soldAmount:0,
+    soldEarn:0,
     amount:0,
     rate:0,
     cost:"",
@@ -69,17 +72,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
     var common = wx.getStorageSync('common');
-    that.setData(common);
-    that.setData({
+    this.setData(common);
+    this.setData({
       common: common
     })
     // load the data of some blockChain
-    var key = this.data.coinArray[this.data.coinIndex] + '_' + this.data.buyerArray[this.data.buyerIndex]
-    var chainData = wx.getStorageSync(key);
-    console.log(chainData)
-    this.setData(chainData);
+    var key = this.data.coinArray[this.data.coinIndex] + '_' + this.data.buyerArray[this.data.buyerIndex];
+    var that = this;
+    wx.getStorage({
+      key: key,
+      success: function (res) {
+        that.setData(res.data);
+      }
+    });
     /*
     wx.getStorage({
       key: key,
@@ -305,20 +311,33 @@ Page({
   },
   onBuy:function(e){
     var viewBlock = this.data.viewBlock;
-    if (this.data.buyOrSale){
-      if (viewBlock[0].bottom < this.data.amount)
+    var totalAmount = this.data.totalAmount;
+    var totalCost = this.data.totalCost;
+    var soldAmount = this.data.soldAmount;
+    var soldEarn = this.data.soldEarn;
+    if (this.data.buyOrSale){//sale
+      if (totalAmount - soldAmount < this.data.amount)
         return;
-      viewBlock[0].bottom -= this.data.amount;
-      viewBlock[2].bottom += this.data.cost;
+      soldAmount += this.data.amount;
+      soldEarn += this.data.cost;
+    }
+    else{//buy
+      totalAmount += this.data.amount;
+      totalCost += this.data.cost;
+    }
 
-    }
-    else{
-      viewBlock[0].bottom += this.data.amount;
-      viewBlock[2].bottom -= this.data.cost;
-      viewBlock[3].bottom += this.data.cost;
-    }
+    viewBlock[0].bottom = (totalAmount - soldAmount).toFixed(5);
+    viewBlock[1].bottom = (totalCost / totalAmount).toFixed(5);
+    viewBlock[0].bottom = (soldEarn - totalCost).toFixed(5);
+    viewBlock[0].bottom = (totalCost).toFixed(5);
+
+
     this.setData({
-      viewBlock:viewBlock
+      viewBlock:viewBlock,
+      totalAmount:totalAmount,
+      totalCost:totalCost,
+      soldEarn:soldEarn,
+      soldAmount:soldAmount
     })
     var key = this.data.coinArray[this.data.coinIndex] + '_' + this.data.buyerArray[this.data.buyerIndex];
     var legend = this.data.legend;
@@ -326,7 +345,11 @@ Page({
     var value = {
       viewBlock:viewBlock,
       rate:this.data.rate,
-      legend:legend
+      legend:legend,
+      totalAmount:totalAmount,
+      totalCost: totalCost,
+      soldEarn: soldEarn,
+      soldAmount: soldAmount
     }
     wx.setStorage({
       key: key,
