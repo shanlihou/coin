@@ -4,13 +4,32 @@
     "pages/draw/draw",
     "pages/cube/cube",
     "pages/logs/logs"
- 
-
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#1D2127",
     "navigationBarTitleText": "coin",
     "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "backgroundColor":"#686868",
+    "selectedColor":"#12161C",
+    "list":[{
+      "iconPath":"utils/icons/Calculator.png",
+      "selectedIconPath":"utils/icons/Calculator.png",
+      "pagePath":"pages/calc/calc",
+      "text":"计算"
+    },{
+      "iconPath":"utils/icons/Investigate.png",
+      "selectedIconPath":"utils/icons/Investigate.png",
+      "pagePath":"pages/draw/draw",
+      "text":"历史记录"
+    },{
+      "iconPath":"utils/icons/Growing.png",
+      "selectedIconPath":"utils/icons/Growing.png",
+      "pagePath":"pages/logs/logs",
+      "text":"当前行情"
+    }]
   }
+
 }
