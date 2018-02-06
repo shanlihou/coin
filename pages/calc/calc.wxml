@@ -1,12 +1,12 @@
 <import src="view_template.wxml" />
 
 <!--pages/calc/calc.wxml-->
-<picker class="pick" style="margin-top:20rpx;" bindchange="coinChange" value="{{coinIndex}}" range="{{coinArray}}">
+<picker id="coin" class="pick" style="margin-top:20rpx;" bindchange="coinChange" value="{{coinIndex}}" range="{{coinArray}}">
     <view class="pick-view">{{coinArray[coinIndex]}}</view>
     <image class="pick-img" src="down.png" style='width:15rpx;height:10rpx'></image>
 </picker>
 
-<picker class="pick" style="margin-top:30rpx" bindchange="buyerChange" value="{{buyerIndex}}" range="{{buyerArray}}">
+<picker id="buyer" class="pick" style="margin-top:30rpx" bindchange="coinChange" value="{{buyerIndex}}" range="{{buyerArray}}">
   <view class="pick-block">
       <view class="pick-view">{{buyerArray[buyerIndex]}}</view>
       <image class="pick-img" src="down.png" style='width:7px;height:5px'></image>
@@ -51,7 +51,7 @@
       </view>
       <view class="hori-view" style="margin-top:10pt">
         <button bindtap="clearRecord">清空</button>
-        <button>保存</button>
+        <button bindtap="saveRecord">保存</button>
       </view>
   </swiper-item>
 
