@@ -41,13 +41,17 @@
         <template is="msgItem" style="width:40%" data="{{...viewBlock[3]}}"/>
         <view style="width:15%"></view>
       </view>
-      <view style="margin-top: 15pt; display: flex">
+      <view style="margin-left: 10pt;margin-top: 15pt; display: flex">
         <text>修改</text><switch bindchange="changeServiceCharge" checked="{{serviceChargeLock}}" >锁定</switch>
         <view style="width:5%"/>
         <input disabled="{{serviceChargeLock}}" 
               focus="{{serviceCharge? false : true}}"
               placeholder="手续费： {{serviceCharge}}" style="align-self:right"
         ></input>
+      </view>
+      <view class="hori-view" style="margin-top:10pt">
+        <button bindtap="clearRecord">清空</button>
+        <button>保存</button>
       </view>
   </swiper-item>
 

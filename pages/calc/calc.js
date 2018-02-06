@@ -362,4 +362,19 @@ Page({
       serviceChargeLock: e.detail.value
     })
   },
+
+  clearRecord:function(e) {
+    wx.showModal({
+      title: '清空内容',
+      content: '确定要清空该币种么？',
+      success: function(res) {
+        if (res.confirm) {
+          console.log("清空")
+        }else if (res.cancel) {
+          console.log("还是算了")
+        }
+      }
+    })
+
+  }
 })
