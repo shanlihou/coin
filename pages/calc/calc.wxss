@@ -4,10 +4,10 @@ page {
   color: #fff;
 }
 .pick {
-  height: 40px;
+  height: 90rpx;
   background-color: #342821;
   display:block;
-  border: 1px;
+  border: 2rpx;
   border-style:solid;
   border-color: #979797;
   align-content: center;
@@ -41,8 +41,8 @@ page {
 }
 .vert-line{
   background-color: #2F96AB;
-  width:150px;
-  height: 2px;
+  width:140px;
+  height: 8rpx;
 }
 
 
@@ -68,24 +68,24 @@ page {
 
 
 .tab-bar{
-  width: 100%;
-  height: 48px;
+  width: 90%;
+  height: 100rpx;
   display:flex;
   justify-content: space-between;
   flex-flow:row;
-  margin-top: 32px;
-  border-width:1px;
+  margin-top: 36rpx;
+  border-width:2rpx;
   border-style:ridge;
   border-color: #979797;
   align-items: stretch;
 }
 .tab-view{
-   flex:1;
-   text-align: center;
-   color: #fff;
-   background-color: #342821;
+  height: 100%;
+  text-align: center;
+  flex:1;
+  color: #fff;
+  background-color: #342821;
 }
-
 
 .pick-block {
   width:100%;
@@ -101,13 +101,13 @@ page {
 
 .input-vert-line{
   background-color: #E2B300;
-  width: 90%;
+  width: 85%;
   height: 2px;
 }
 
 .input-number{
   padding-top: 10px;
-  width: 90%;
+  width: 80%;
   height: 20pt;
   text-anchor: initial;
   background-clip: content-box;
@@ -117,4 +117,18 @@ page {
   border-width: 1pt;
   color:aliceblue;
   font-size: 12pt;
+}
+
+
+.button-container {
+  padding-top: 30rpx;
+  display: flex;
+  flex-flow:row;
+  width: 100%;
+  height: 90rpx;
+}
+
+.function-button {
+  align-content: center;
+  text-align: center;
 }

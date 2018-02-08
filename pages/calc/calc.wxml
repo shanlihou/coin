@@ -25,23 +25,23 @@
 <!-- Swiper -->
 
 
-<swiper current="{{tabIndex}}" bindchange="onChangeTab" duration="{{duration}}" style='padding-top: 10px;height:300pt'>
+<swiper current="{{tabIndex}}" bindchange="onChangeTab" duration="{{duration}}" style='padding-top: 10px;height:700rpx'>
   <swiper-item>
-      <view class="hori-view" style='width:100% ; height: 100px'>
+      <view class="hori-view" style='width:100% ; height: 100rpx'>
         <view style="width:15%"></view>
         <template is="msgItem" style="width:40%" data="{{...viewBlock[0]}}"/>
         <view style="width:30%"></view>
         <template is="msgItem" style="width:40%" data="{{...viewBlock[1]}}"/>
         <view style="width:15%"></view>
       </view>
-      <view class="hori-view" style='padding-top:20px;width:100%; height: 100px'>
+      <view class="hori-view" style='padding-top:20px;width:100%; height: 100rpx'>
         <view style="width:15%"></view>
         <template is="msgItem" style="width:40%" data="{{...viewBlock[2]}}"/>
         <view style="width:30%"></view>
         <template is="msgItem" style="width:40%" data="{{...viewBlock[3]}}"/>
         <view style="width:15%"></view>
       </view>
-      <view style="margin-left: 10pt;margin-top: 15pt; display: flex">
+      <view style="margin-left: 5%;margin-top: 8%; display: flex; width:100%">
         <text>修改</text><switch bindchange="changeServiceCharge" checked="{{serviceChargeLock}}" >锁定</switch>
         <view style="width:5%"/>
         <input disabled="{{serviceChargeLock}}" 
@@ -49,9 +49,9 @@
               placeholder="手续费： {{serviceCharge}}" style="align-self:right"
         ></input>
       </view>
-      <view class="hori-view" style="margin-top:10pt">
-        <button bindtap="clearRecord">清空</button>
-        <button bindtap="saveRecord">保存</button>
+      <view class="button-container" style="margin-top:5%">
+        <button class="function-button" bindtap="clearRecord">清空</button>
+        <button class="function-button" bindtap="saveRecord">保存</button>
       </view>
   </swiper-item>
 
@@ -59,7 +59,7 @@
     <!-- buy swiper Item  -->
   <swiper-item>
     <!-- <view class="hori-view"> -->
-    <block wx:for="{{legend}}">
+    <block wx:for="{{legend}}" wx:key="this">
       <template is="inputWithLegend" data="{{...item}}" />
     </block>
     <view  style="display:flex; flex-flow: column; padding-left: 15px;">
@@ -68,11 +68,11 @@
       <input disabled="{{true}}" value="{{cost}}" class="input-number" type="digit"/>
     </view>
 
-    <view style="margin-left:15px; display:flex; padding-top:26px" >
+    <view style="margin-left:15px; display:flex; padding-top:15px" >
       <text>买</text> 
       <switch checked="{{buyOrSale}}" bindchange="dealActionChange"></switch> 
       <text>卖</text>
-      <button bindtap="onBuy" disabled="{{buyDisabled}}" style="margin-right:50px">{{dealAction}}</button>
+      <button bindtap="onBuy" disabled="{{buyDisabled}}" style="margin-right:100rpx">{{dealAction}}</button>
     </view>
   </swiper-item>
 
