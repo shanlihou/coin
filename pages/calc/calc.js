@@ -86,13 +86,7 @@ Page({
         that.setData(res.data);
       }
     });
-    /*
-    wx.getStorage({
-      key: key,
-      success: function (res) {
-        that.setData(res.data);
-      }
-    });*/
+    this.loadHistory();
   },
 
   /**
@@ -203,9 +197,8 @@ Page({
   onChangeTab:function(e){
     this.setTab(e.detail.current);
   },
-  clearBus:function(){
-    this.setData({
-      rate: 0,
+  clear:function(what){
+    var clearData = {
       viewBlock: [{
         "top": "持有数量",
         "bottom": 0,
@@ -225,26 +218,52 @@ Page({
         "units": "usdt"
       }
       ],
-      legend: [{
+      totalAmount: 0,
+      totalCost: 0,
+      soldEarn: 0,
+      soldAmount: 0
+    };
+    if (what == 'bus') {
+      clearData.rate = 0;
+      clearData.legend = [{
         "inputTitle": "汇率",
         "padTop": 5,
         "id": "rate",
-        "value":""
+        "value": ""
       },
       {
         "inputTitle": "数量",
         "padTop": 15,
         "id": "amount",
-        value:""
-      }]
-    });
+        "value": ""
+      }];
+      this.setData(clearData);
+    }
+    else if (what == 'overview') {
+      var key = this.data.coinArray[this.data.coinIndex] + '_' + this.data.buyerArray[this.data.buyerIndex];
+      this.setData(clearData);
+      clearData.rate = this.data.rate;
+      clearData.legend = this.data.legend;
+      wx.setStorage({
+        key: key,
+        data: clearData,
+      })
+    }
   },
-  coinChange:function(e){
-    this.setData({
-      coinIndex:e.detail.value
-    });
+  coinChange: function (e) {//will load the data
     var common = this.data.common;
-    common.coinIndex = e.detail.value;
+    if (e.target.id == 'coin') {
+      this.setData({
+        coinIndex: e.detail.value
+      });
+      common.coinIndex = e.detail.value;
+    }
+    else {
+      this.setData({
+        buyerIndex: e.detail.value
+      });
+      common.buyerIndex = e.detail.value;
+    }
     wx.setStorage({
       key: 'common',
       data: common,
@@ -253,39 +272,12 @@ Page({
       common:common
     })
 
-    this.clearBus();
+    this.clear('bus');
     var key = this.data.coinArray[this.data.coinIndex] + '_' + this.data.buyerArray[this.data.buyerIndex]
     var that = this;
     wx.getStorage({
       key: key,
       success: function(res) {
-        that.setData(res.data);
-        that.setData({
-          busData: res.data
-        })
-      },
-    })
-  },
-  buyerChange: function (e) {
-    this.setData({
-      buyerIndex: e.detail.value
-    })
-    var common = this.data.common;
-    common.buyerIndex = e.detail.value;
-    wx.setStorage({
-      key: 'common',
-      data: common,
-    });
-    this.setData({
-      common: common
-    })
-
-    this.clearBus();
-    var key = this.data.coinArray[this.data.coinIndex] + '_' + this.data.buyerArray[this.data.buyerIndex]
-    var that = this;
-    wx.getStorage({
-      key: key,
-      success: function (res) {
         that.setData(res.data);
         that.setData({
           busData: res.data
@@ -309,7 +301,33 @@ Page({
     });
     this.calcCost();
   },
-  onBuy:function(e){
+  decimal:function(num){
+    return Math.round(num * 10000) / 10000;
+  },
+  saveBus: function (key) {
+    var legend = this.data.legend;
+    legend[0].value = this.data.rate;
+    var value = {
+      viewBlock: this.data.viewBlock,
+      rate: this.data.rate,
+      legend: legend,
+      totalAmount: this.data.totalAmount,
+      totalCost: this.data.totalCost,
+      soldEarn: this.data.soldEarn,
+      soldAmount: this.data.soldAmount
+    }
+    wx.setStorage({
+      key: key,
+      data: value,
+    });
+    var hisKey = this.createHistoryKey('_history');
+    wx.setStorage({
+      key: hisKey,
+      data: this.data.history,
+    });
+
+  },
+  onBuy:function(e){//will save the data
     var viewBlock = this.data.viewBlock;
     var totalAmount = this.data.totalAmount;
     var totalCost = this.data.totalCost;
@@ -325,12 +343,10 @@ Page({
       totalAmount += this.data.amount;
       totalCost += this.data.cost;
     }
-
-    viewBlock[0].bottom = (totalAmount - soldAmount).toFixed(5);
-    viewBlock[1].bottom = (totalCost / totalAmount).toFixed(5);
-    viewBlock[0].bottom = (soldEarn - totalCost).toFixed(5);
-    viewBlock[0].bottom = (totalCost).toFixed(5);
-
+    viewBlock[0].bottom = this.decimal(totalAmount - soldAmount);
+    viewBlock[1].bottom = this.decimal(totalCost / totalAmount);
+    viewBlock[2].bottom = this.decimal(soldEarn - totalCost);
+    viewBlock[3].bottom = this.decimal(totalCost);
 
     this.setData({
       viewBlock:viewBlock,
@@ -338,23 +354,19 @@ Page({
       totalCost:totalCost,
       soldEarn:soldEarn,
       soldAmount:soldAmount
-    })
-    var key = this.data.coinArray[this.data.coinIndex] + '_' + this.data.buyerArray[this.data.buyerIndex];
-    var legend = this.data.legend;
-    legend[0].value = this.data.rate;
-    var value = {
-      viewBlock:viewBlock,
+    });
+    var history = this.data.history;
+    history.push({
+      chain: this.data.coinArray[this.data.coinIndex],
+      buyer: this.data.buyerArray[this.data.buyerIndex],
       rate:this.data.rate,
-      legend:legend,
-      totalAmount:totalAmount,
-      totalCost: totalCost,
-      soldEarn: soldEarn,
-      soldAmount: soldAmount
-    }
-    wx.setStorage({
-      key: key,
-      data: value,
-    })
+      amount:this.data.amount,
+      cost:this.data.cost,
+      action: this.data.buyOrSale
+    });
+    this.setData({
+      history:history
+    });
   },
 
   changeServiceCharge:function(e) {
@@ -362,19 +374,46 @@ Page({
       serviceChargeLock: e.detail.value
     })
   },
+  saveRecord:function(e){
+    var key = this.data.coinArray[this.data.coinIndex] + '_' + this.data.buyerArray[this.data.buyerIndex];
+    this.saveBus(key);
+  },
 
   clearRecord:function(e) {
+    var that = this;
     wx.showModal({
       title: '清空内容',
       content: '确定要清空该币种么？',
       success: function(res) {
         if (res.confirm) {
-          console.log("清空")
+          that.clear('overview');
         }else if (res.cancel) {
-          console.log("还是算了")
         }
       }
     })
 
+  },
+  loadHistory(){
+    var hisKey = this.createHistoryKey('_history');
+    var that = this;
+    wx.getStorage({
+      key: hisKey,
+      complete: function(res) {
+        if ('data' in res){
+          that.setData({
+            history:res.data
+          });
+        }
+        else{
+          that.setData({
+            history:[]
+          })
+        }
+      },
+    })
+  },
+  createHistoryKey(key){
+    var dateStr = new Date().toLocaleDateString();
+    return dateStr + key;
   }
 })
