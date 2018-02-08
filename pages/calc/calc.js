@@ -73,10 +73,21 @@ Page({
    */
   onLoad: function (options) {
     var common = wx.getStorageSync('common');
-    this.setData(common);
-    this.setData({
-      common: common
-    })
+    if (common){
+      this.setData(common);
+      this.setData({
+        common: common
+      })
+    }
+    else{
+      common = {
+        coinIndex:0,
+        buyerIndex:0
+      };
+      this.setData({
+        common: common
+      })
+    }
     // load the data of some blockChain
     var key = this.data.coinArray[this.data.coinIndex] + '_' + this.data.buyerArray[this.data.buyerIndex];
     var that = this;
@@ -345,7 +356,7 @@ Page({
     }
     viewBlock[0].bottom = this.decimal(totalAmount - soldAmount);
     viewBlock[1].bottom = this.decimal(totalCost / totalAmount);
-    viewBlock[2].bottom = this.decimal(soldEarn - totalCost);
+    viewBlock[2].bottom = this.decimal(soldEarn);
     viewBlock[3].bottom = this.decimal(totalCost);
 
     this.setData({
