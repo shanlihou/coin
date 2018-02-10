@@ -209,26 +209,32 @@ Page({
     this.setTab(e.detail.current);
   },
   clear:function(what){
+    var viewBlock = [{
+      "top": "持有数量",
+      "bottom": 0,
+      "units": "块"
+    }, {
+      "top": "平均买入价格",
+      "bottom": 0,
+      "units": "btc/usdt"
+    }, {
+      "top": "收益",
+      "bottom": 0,
+      "units": "usdt"
+    },
+    {
+      "top": "成本",
+      "bottom": 0,
+      "units": "usdt"
+    }];
+    var coin = this.data.coinArray[this.data.coinIndex];
+    var unit = this.data.buyerArray[this.data.buyerIndex];
+
+    viewBlock[1].units = coin + '/' + unit;
+    viewBlock[2].units = unit;
+    viewBlock[3].units = unit;
     var clearData = {
-      viewBlock: [{
-        "top": "持有数量",
-        "bottom": 0,
-        "units": "块"
-      }, {
-        "top": "平均买入价格",
-        "bottom": 0,
-        "units": "btc/usdt"
-      }, {
-        "top": "收益",
-        "bottom": 0,
-        "units": "usdt"
-      },
-      {
-        "top": "成本",
-        "bottom": 0,
-        "units": "usdt"
-      }
-      ],
+      viewBlock: viewBlock,
       totalAmount: 0,
       totalCost: 0,
       soldEarn: 0,
@@ -275,10 +281,6 @@ Page({
       });
       common.buyerIndex = e.detail.value;
     }
-    wx.setStorage({
-      key: 'common',
-      data: common,
-    });
     this.setData({
       common:common
     })
@@ -388,6 +390,11 @@ Page({
   saveRecord:function(e){
     var key = this.data.coinArray[this.data.coinIndex] + '_' + this.data.buyerArray[this.data.buyerIndex];
     this.saveBus(key);
+
+    wx.setStorage({
+      key: 'common',
+      data: this.data.common
+    });
   },
 
   clearRecord:function(e) {
