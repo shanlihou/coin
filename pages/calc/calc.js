@@ -12,9 +12,9 @@ Page({
 
     dealAction:"买入",
 
-    coinArray:['btc', 'eth', 'bnb'],
+    coinArray:['BTC', 'ETH', 'BNB','EOS','LTC','NEO','BCC'],
     coinIndex:0,
-    buyerArray:['usdt', 'rmb'],
+    buyerArray:['usdt','rmb'],
     buyerIndex:0,
     totalAmount:0,
     totalCost:0,

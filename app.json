@@ -3,7 +3,8 @@
     "pages/calc/calc",
     "pages/draw/draw",
     "pages/cube/cube",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/blank/blank"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -22,12 +23,12 @@
     },{
       "iconPath":"utils/icons/Investigate.png",
       "selectedIconPath":"utils/icons/Investigate.png",
-      "pagePath":"pages/draw/draw",
+      "pagePath":"pages/blank/blank",
       "text":"历史记录"
     },{
       "iconPath":"utils/icons/Growing.png",
       "selectedIconPath":"utils/icons/Growing.png",
-      "pagePath":"pages/logs/logs",
+      "pagePath":"pages/blank/blank",
       "text":"当前行情"
     }]
   }
